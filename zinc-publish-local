@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SBT_PUBLISH_VERSION="1.9.10-SNAPSHOT"
+SCALA_PUBLISH_VERSION="2.12.18"
+SBT_MAIN_VERSION="1.0"
+
+#rm -rf ~/.ivy2/local/org.scala-sbt/ # Take care, this may also remove other artifacts from this groupId
+rm -rf ~/.sbt/boot/scala-${SCALA_PUBLISH_VERSION}/org.scala-sbt/sbt/${SBT_PUBLISH_VERSION} ;
+rm -rf ~/.sbt/${SBT_MAIN_VERSION}/preferences/${SBT_PUBLISH_VERSION} ;
+sbt +publishLocal
