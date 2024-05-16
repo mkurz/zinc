@@ -104,7 +104,19 @@ final class CompilerArguments(
   def createBootClasspath(addLibrary: Boolean): String = {
     def findBoot: String = {
       import scala.collection.JavaConverters._
-      System.getProperties.asScala.iterator
+      val jSysProps = System.getProperties
+      println("--- system properties")
+      jSysProps.forEach((k, v) => {
+        println(
+          s"""${Option(k).getOrElse("_NULL_")} [${Option(k).map(_.getClass).getOrElse("")}]
+             | / ${Option(v).getOrElse("_NULL_")} [${Option(v).map(_.getClass).getOrElse(
+              ""
+            )}]""".stripMargin.replaceAll("\n", "")
+        )
+      })
+      println("---------------------")
+      val sysProps = jSysProps.asScala
+      sysProps.iterator
         .collectFirst {
           case (k, v) if k.endsWith(".boot.class.path") => v
         }
